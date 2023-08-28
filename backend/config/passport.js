@@ -47,7 +47,7 @@ passport.use(new JwtStrategy(opts, async (jwtPayload, done) => {
     }
 }));
 
-exports.requireUserAuth = passport.authenticate('jwt', { session: false });
+exports.requireUser = passport.authenticate('jwt', { session: false });
 
 exports.restoreUser = function (req, res, next) {
     return passport.authenticate('jwt', { session: false }, (err, user) => {

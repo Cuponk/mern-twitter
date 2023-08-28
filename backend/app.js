@@ -4,10 +4,12 @@ var logger = require("morgan");
 const debug = require("debug");
 
 const cors = require("cors");
-const { isProduction } = require("./config/keys");
 const csurf = require("csurf");
+const { isProduction } = require("./config/keys");
 
-require('./models/User')
+require('./models/User');
+require('./config/passport');
+const passport = require('passport');
 
 var usersRouter = require("./routes/api/users");
 var tweetsRouter = require("./routes/api/tweets");
@@ -37,6 +39,7 @@ app.use(
 app.use("/api/users", usersRouter);
 app.use("/api/tweets", tweetsRouter);
 app.use("/api/csrf", csrfRouter);
+app.use(passport.initialize());
 
 app.use((req, res, next) => {
     const err = new Error("Not Found");
